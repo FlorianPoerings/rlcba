@@ -1,166 +1,526 @@
 # 🎮 CBA Bot — Curveball & Rocket League Queue Bot
 
-A full-featured Discord bot for managing 3v3 Curveball and Normal Rocket League queues, private match creation, MMR tracking, and ranked/open systems.
+A full-featured Discord bot for managing competitive **3v3 Rocket League queues** with support for:
+
+- Ranked & Open matchmaking
+- Curveball & Normal modes
+- Automatic lobby creation
+- MMR tracking
+- Team balancing
+- Captain drafts
+- Queue management
+- Voice channel automation
+- Match reporting
+- Statistics & leaderboards
 
 ---
 
-## Features
+## 🛠️ Built With
 
-- **4 Queue Types:** Ranked Curveball, Open Curveball, Ranked Normal 3v3, Open Normal 3v3
-- **Auto-match at 6 players** — creates a private Voice Channel with a 4-character lobby code
-- **Team modes:** Random, Captains (DM-based draft), Balanced (MMR snake draft)
-- **Voting system** — first mode to reach 3 votes wins
-- **Private DMs** — every player gets lobby name, password, and host instructions
-- **MMR system** — upset bonuses, winstreak multipliers, ranked/open split
-- **Owner commands** — edit MMR, verify players, cancel lobbies, undo reports
+- Node.js
+- Discord.js v14
+- SQLite
 
 ---
 
-## Setup
+# ✨ Features
 
-### 1. Prerequisites
+---
+
+## 🎯 Queue System
+
+### 4 Queue Types
+
+- Ranked Curveball
+- Open Curveball
+- Ranked Normal 3v3
+- Open Normal 3v3
+
+### Features
+
+- Auto-matchmaking at 6 players
+- Queue timers
+- Queue status embeds
+- Queue join/leave protection
+- Ranked verification system
+
+---
+
+## 🎮 Match System
+
+- Automatic private lobby creation
+- Random 4-character lobby codes
+- Automatic Voice Channel creation/deletion
+- Automatic player movement
+- Match cancellation if players do not join within 5 minutes
+- Match report validation
+- Active match protection
+
+---
+
+## 🧠 Team Modes
+
+### 🎲 Random
+
+Players are shuffled randomly into 2 teams.
+
+### ⚖️ Balanced
+
+Teams are generated using MMR balancing.
+
+### 👑 Captains
+
+Top 2 MMR players become captains and draft players via DMs.
+
+---
+
+## 📩 Private DM System
+
+Players automatically receive:
+
+- Lobby code
+- Password
+- Host information
+- Team assignment
+- Draft instructions
+- Voting menus
+
+---
+
+## 📊 MMR System
+
+### Ranked Queues
+
+- Requires `Verified` role
+- Starts at `1000 MMR`
+- Competitive MMR gain/loss
+
+### Open Queues
+
+- No restrictions
+- Starts at `0 MMR`
+- Casual MMR tracking
+
+### Features
+
+- Upset bonus scaling
+- Winstreak multipliers
+- Maximum MMR caps
+- Minimum MMR floor (`0`)
+
+---
+
+## 🏆 Statistics & Leaderboards
+
+- Global leaderboard system
+- Per-queue rankings
+- Wins/Losses tracking
+- Winrate tracking
+- Winstreak tracking
+- Personal stats embeds
+
+---
+
+## 🛠️ Moderation Features
+
+- Manual MMR editing
+- Match cancellation
+- Undo match reports
+- Queue management
+- Player substitutions
+- Verification management
+
+---
+
+# 📦 Installation
+
+---
+
+## 1️⃣ Requirements
 
 - Node.js v18+
-- A Discord bot application at https://discord.com/developers/applications
+- npm
+- Discord Bot Application
 
-### 2. Bot Permissions
+Create your bot here:
 
-When inviting your bot, ensure it has:
-- `bot` scope + `applications.commands`
-- Permissions: `Send Messages`, `Manage Channels`, `Move Members`, `Manage Roles`, `View Channel`, `Connect`, `Read Message History`
+👉 https://discord.com/developers/applications
 
-Enable **Privileged Gateway Intents**:
+---
+
+# 🔑 Discord Bot Setup
+
+## Required OAuth Scopes
+
+- `bot`
+- `applications.commands`
+
+## Required Bot Permissions
+
+- Send Messages
+- Manage Channels
+- Move Members
+- Manage Roles
+- View Channels
+- Connect
+- Read Message History
+
+---
+
+## Enable Gateway Intents
+
+Inside the Discord Developer Portal enable:
+
 - `SERVER MEMBERS INTENT`
 - `MESSAGE CONTENT INTENT`
 
-### 3. Discord Server Setup
+---
 
-Create the following in your server:
+# 🏗️ Discord Server Setup
 
-**Text Channels:**
-| Channel Name         | Purpose                        |
-|----------------------|--------------------------------|
-| `ranked-cb-queue`    | Ranked Curveball queue         |
-| `open-cb-queue`      | Open Curveball queue           |
-| `ranked-n-queue`     | Ranked Normal 3v3 queue        |
-| `open-n-queue`       | Open Normal 3v3 queue          |
-| `match-report`       | Players report results here    |
-| `bot-log`            | Bot activity log               |
+---
 
-**Voice Category:**
-- Create a category called `Matches` (VCs will be created/deleted here automatically)
+## 📁 Text Channels
 
-**Roles:**
-- `Owner` — full admin access
-- `Verified` — access to ranked queues, starts with 1,000 MMR
+| Channel | Purpose |
+|---|---|
+| `ranked-cb-queue` | Ranked Curveball queue |
+| `open-cb-queue` | Open Curveball queue |
+| `ranked-n-queue` | Ranked Normal queue |
+| `open-n-queue` | Open Normal queue |
+| `match-report` | Match result reporting |
+| `bot-log` | Bot logs & debugging |
 
-### 4. Install & Configure
+---
 
-```bash
-# Clone / copy the bot files
-cd cba-bot
+## 🔊 Voice Category
 
-# Install dependencies
-npm install
+Create a category called:
 
-# Copy the example env file
-cp .env.example .env
-
-# Edit .env with your IDs
-nano .env
+```txt
+Matches
 ```
 
-Fill in `.env`:
-- `DISCORD_TOKEN` — from the Bot page on Discord Developer Portal
-- `GUILD_ID` — right-click your server → Copy Server ID
-- Channel/Category/Role IDs — right-click each → Copy ID (enable Developer Mode in Discord settings)
+Temporary voice channels will automatically be created inside this category.
 
-### 5. Run
+---
+
+## 👥 Roles
+
+| Role | Purpose |
+|---|---|
+| `Owner` | Full admin permissions |
+| `Verified` | Access to ranked queues |
+
+---
+
+# ⚙️ Installation
+
+## Install Dependencies
 
 ```bash
-# Production
-npm start
+npm install
+```
 
-# Development (auto-restart on changes)
+---
+
+## Configure Environment Variables
+
+Copy:
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env`:
+
+```env
+DISCORD_TOKEN=
+GUILD_ID=
+
+RANKED_CB_QUEUE=
+OPEN_CB_QUEUE=
+RANKED_N_QUEUE=
+OPEN_N_QUEUE=
+
+MATCH_REPORT=
+BOT_LOG=
+
+MATCH_CATEGORY=
+
+OWNER_ROLE=
+VERIFIED_ROLE=
+```
+
+---
+
+# ▶️ Starting the Bot
+
+## Production
+
+```bash
+npm start
+```
+
+## Development
+
+```bash
 npm run dev
 ```
 
 ---
 
-## Commands
+# 📖 Commands
 
-### Player Commands
+---
+
+## 👤 Player Commands
 
 | Command | Description |
 |---|---|
-| `!q` | Join queue in the current queue channel |
+| `!q` | Join the queue |
 | `!leave` | Leave the queue |
-| `!status` | Show queue count and players |
-| `!r` | Vote: Random teams |
-| `!c` | Vote: Captain draft |
-| `!b` | Vote: Balanced (MMR) teams |
-| `!pick <number>` | Pick a player during captain draft (DM only) |
-| `!report <CODE> <w/l>` | Report match result (in match-report channel) |
+| `!status` | Show queue status |
+| `!stats` | View your stats |
+| `!stats @user` | View another player's stats |
+| `!leaderboard` | Show leaderboard |
+| `!leaderboard ranked_cb` | Show specific queue leaderboard |
+| `!r` | Vote for random teams |
+| `!c` | Vote for captains |
+| `!b` | Vote for balanced teams |
+| `!pick <number>` | Pick player during captain draft |
+| `!report <CODE> <w/l>` | Report match result |
 | `!help` | Show all commands |
 
-### Owner Commands
+---
+
+## 🛠️ Moderator Commands
 
 | Command | Description |
 |---|---|
-| `!editmmr @user <mmr> [queue_type]` | Set a player's MMR. Queue types: `ranked_cb`, `open_cb`, `ranked_n`, `open_n` |
-| `!setrank @user verified` | Give Verified role + 1,000 base ranked MMR |
-| `!cancel <LOBBYCODE>` | Cancel a lobby and delete its VCs |
-| `!undo <LOBBYCODE>` | Undo a match report (allows re-reporting) |
+| `!helpmod` | Show moderator commands |
+| `!editmmr @user <mmr> [queue_type]` | Set player MMR |
+| `!setrank @user verified` | Give verified role |
+| `!cancel <LOBBYCODE>` | Cancel active match |
+| `!undo <LOBBYCODE>` | Undo match result |
+| `!sub @playerOut @playerIn <CODE>` | Substitute player |
+| `!addtoqueue @user` | Force-add player to queue |
+| `!removefromqueue @user` | Remove player from queue |
 
 ---
 
-## How a Match Works
-
-1. **Players join** the relevant queue channel and type `!q`
-2. **Queue fills** at 6 players → bot creates a waiting VC (`🎮 ABCD – Waiting`)
-3. **All 6 join** the VC → voting DMs are sent automatically
-4. Players vote with `!r`, `!c`, or `!b` — **first to 3 votes wins**
-5. Teams are assigned:
-   - **Random:** shuffled and split
-   - **Balanced:** snake draft by MMR (1,2,2,1,1,2)
-   - **Captains:** top 2 MMR are captains, they pick via DMs with `!pick`
-6. Two team VCs are created (`🔵 ABCD Team 1`, `🔴 ABCD Team 2`)
-7. Players are moved automatically and receive **private DMs** with:
-   - Lobby code & password
-   - Who creates the lobby
-   - Their team
-8. After the match, one player runs `!report ABCD w` or `!report ABCD l` in `#match-report`
-9. MMR is distributed, team VCs are deleted
+# 🎮 Match Lifecycle
 
 ---
 
-## MMR System
+## Queue Phase
 
-### Ranked vs Open
-- **Ranked:** Requires `Verified` role. Starts at **1,000 MMR**. MMR is won/lost.
-- **Open:** Anyone can join. Starts at **0 MMR**. MMR is tracked but not role-gated.
-
-### MMR Calculation
-- **Base change:** 25 MMR per match
-- **Upset bonus:** Winning against higher-MMR opponents gives more MMR (tanh scaling)
-- **Winstreak bonus:** +10% per consecutive win, capped at +60%
-- **Cap:** Maximum 50 MMR gained/lost in a single match
-- **Floor:** MMR cannot go below 0
+1. Players join queue with `!q`
+2. Queue reaches 6 players
+3. Match is automatically created
 
 ---
 
-## File Structure
+## Waiting VC Phase
 
+- Temporary waiting VC is created
+- All players must join within 5 minutes
+
+Otherwise:
+
+- Match is cancelled
+- Lobby becomes unreportable
+- Players can queue again
+
+---
+
+## Voting Phase
+
+Players vote for:
+
+- `!r` → Random
+- `!c` → Captains
+- `!b` → Balanced
+
+First mode to 3 votes wins.
+
+---
+
+## Team Creation
+
+Depending on the selected mode:
+
+- Teams are randomized
+- Balanced via MMR
+- Drafted by captains
+
+---
+
+## Match Start
+
+The bot:
+
+- Creates team voice channels
+- Moves players automatically
+- Sends DMs with:
+  - Lobby code
+  - Password
+  - Team info
+  - Host
+
+---
+
+## Match Reporting
+
+After the match:
+
+```bash
+!report ABCD w
 ```
+
+or
+
+```bash
+!report ABCD l
+```
+
+The bot:
+
+- Updates MMR
+- Updates stats
+- Deletes VCs
+- Posts result embed
+
+---
+
+# 📈 MMR System
+
+## Base Rules
+
+| Feature | Value |
+|---|---|
+| Base MMR Gain | `25` |
+| Max Gain/Loss | `50` |
+| Minimum MMR | `0` |
+
+---
+
+## Upset Bonus
+
+Winning against stronger opponents grants bonus MMR.
+
+---
+
+## Winstreak Bonus
+
+- `+10%` per win
+- Maximum `+60%`
+
+---
+
+# 📊 Embeds
+
+The bot includes:
+
+- Queue embeds
+- Leaderboard embeds
+- Stats embeds
+- Match result embeds
+- Voting embeds
+- Lobby embeds
+
+---
+
+# 🧠 Smart Protections
+
+---
+
+## Queue Protection
+
+Players cannot:
+
+- Queue twice
+- Queue while in active matches
+- Join ranked without verification
+
+---
+
+## Match Protection
+
+Players cannot:
+
+- Report cancelled matches
+- Join multiple active matches
+- Substitute players already in matches
+- Substitute queued players
+
+---
+
+# 📁 Project Structure
+
+```txt
 cba-bot/
-├── index.js          # Entry point, Discord client setup
-├── config.js         # All settings and IDs
-├── database.js       # SQLite database (players + matches)
-├── queueManager.js   # Queue state for all 4 queue types
-├── matchManager.js   # Match lifecycle, voting, teams, MMR
-├── commands.js       # All !command handlers
+├── index.js
+├── config.js
+├── commands.js
+├── database.js
+├── queueManager.js
+├── matchManager.js
+├── embeds.js
 ├── package.json
 ├── .env.example
+├── README.md
 └── data/
-    └── cba.db        # Auto-created SQLite database
+    └── cba.db
 ```
+
+---
+
+# 🗄️ Database
+
+The bot stores:
+
+- Players
+- MMR
+- Wins/Losses
+- Winstreaks
+- Match history
+- Queue data
+
+Using SQLite.
+
+---
+
+# 🔥 Future Ideas
+
+Potential future features:
+
+- Slash command support
+- Web dashboard
+- Seasonal resets
+- Match history pages
+- Anti-smurf system
+- Elo decay
+- Tournament mode
+- Party queue system
+- Webhooks
+- Match replay tracking
+
+---
+
+# ❤️ Credits
+
+Built for competitive Rocket League communities focused on:
+
+- Curveball
+- 6mans
+- Competitive private matches
+- Automated matchmaking
+
+---
+
+# 📜 License
+
+MIT License
+
+Feel free to modify, improve, and share.
